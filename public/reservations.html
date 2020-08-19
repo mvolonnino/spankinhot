@@ -62,8 +62,44 @@
           </div>
         </div>
       </div>
+      <footer class="footer">
+        <div class="container">
+          <p>
+            <a href="/api/tables">API Table Link</a> |
+            <a href="/api/waitlist">API Wait List</a>
+        </p></div>
+      </footer>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+    // get the information put into the form
+      $(".submit").on("click", function (event) {
+        event.preventDefault();
+        console.log("clicked submit: ", this);
+
+        var newRes = {
+          customerName: $("#reserve-name").val().trim(),
+          phoneNumber: $("#reserve-phone").val().trim(),
+          customerEmail: $("#reserve-email").val().trim(),
+          customerId: $("#reserve-id").val().trim(),
+        };
+        console.log("newRes: ", newRes);
+
+        currentReservations.push(newRes);
+
+
+          $.post("/api/tables", newRes, function(data){
+          if (data){
+            alert("You have been booked!");
+          } else {
+            alert("Sorry, no tables available - waitlist")
+          }
+        });
+      });
+
+      
+
+    </script>
   </body>
 </html>
