@@ -1,8 +1,12 @@
 {
-  "name": "spankinhotrestaurant",
+  "name": "spankinhotRestaurant",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
@@ -11,13 +15,11 @@
     "type": "git",
     "url": "git+https://github.com/mvolonnino/spankinhotRestaurant.git"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/mvolonnino/spankinhotRestaurant/issues"
   },
-  "homepage": "https://github.com/mvolonnino/spankinhotRestaurant#readme",
-  "dependencies": {
-    "express": "^4.17.1"
-  }
+  "homepage": "https://github.com/mvolonnino/spankinhotRestaurant#readme"
 }
