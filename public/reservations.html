@@ -2,38 +2,46 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <meta name="Description" content="Enter your description here" />
+    <title>Reservation Page</title>
+
+    <!-- Latest compiled and minified CSS & JS -->
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     />
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
     />
-    <!-- <link rel="stylesheet" href="assets/css/style.css" /> -->
-    <title>Reservations Page</title>
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
   </head>
+
   <body>
     <div class="container">
       <div class="jumbotron">
         <h1 class="text-center">
-          <span class="fa fa-fire"></span> Spankin Hot Restaurant
+          <span class="fa fa-fire"></span> Hot Restaurant
         </h1>
-        <hr>
-        <h2 class="text-center"> Make your reservation</h2>
-        <br>
+        <hr />
+        <h2 class="text-center">Make your reservation</h2>
+        <br />
         <div class="text-center">
-          <a href="/tables"">
-          <button class="btn btn-lg btn-primary"><span class="fa fa-list-alt"></span> View Tables</button></a>
-          <a href="/"><button class="btn btn-lg btn-default"><span class="fa fa-home"></span></button></a>
+          <a href="/tables">
+            <button class="btn btn-lg btn-primary">
+              <span class="fa fa-list-alt"></span> View Tables
+            </button>
+          </a>
+          <a href="/">
+            <button class="btn btn-lg btn-default">
+              <span class="fa fa-home"></span>
+            </button>
+          </a>
         </div>
       </div>
       <div class="row">
         <div class="col-lg-12">
-          <!-- Reservations -->
+          <!-- Reservation Page -->
           <div class="card">
             <div class="card-header">
               Table Reservation
@@ -42,77 +50,86 @@
               <form role="form">
                 <div class="form-group">
                   <label for="reserve-name">Name</label>
-                  <input type="text" class="form-control" id="reserve-name">
+                  <input type="text" class="form-control" id="reserve-name" />
                 </div>
                 <div class="form-group">
                   <label for="reserve-phone">Phone Number</label>
-                  <input type="text" class="form-control" id="reserve-phone">
+                  <input type="text" class="form-control" id="reserve-phone" />
                 </div>
                 <div class="form-group">
                   <label for="reserve-email">Email</label>
-                  <input type="text" class="form-control" id="reserve-email">
+                  <input type="text" class="form-control" id="reserve-email" />
                 </div>
                 <div class="form-group">
-                  <label for="reserve-id">Unique ID</label>
-                  <input type="text" class="form-control" id="reserve-id">
+                  <label for="reserve-unique-id">Unique ID</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="reserve-unique-id"
+                  />
                 </div>
-                <button type="submit" class="btn btn-primary submit">Submit</button>
+                <button type="submit" class="btn btn-primary submit">
+                  Submit
+                </button>
               </form>
             </div>
           </div>
         </div>
       </div>
+
       <footer class="footer">
         <div class="container">
           <p>
             <a href="/api/tables">API Table Link</a> |
             <a href="/api/waitlist">API Wait List</a>
-        </p></div>
+          </p>
+        </div>
       </footer>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <!-- BELOW CODE IS CRITICAL. IT HANDLES HOW FORM DATA IS SENT TO OUR SERVER -->
-    <script type="text/javascript">
-    // In this code below we create the Front-end JavaScript which "POSTS" our form data to our express server.
-    // In essence, when the user hits submit, jQuery grabs all of the data from the fields then sends a post request to our API
-    // Our API recognizes the route (/api/tables) and then runs the associated code (found in apiRoutes.js)
-    // In this case the associated code "saves" the data to the tableData.js file or the waitinglistData.js if more than 5 reservations are filled out
-      $(".submit").on("click", function (event) {
-        event.preventDefault();
-        console.log("clicked submit: ", this);
-
-        var newRes = {
-          customerName: $("#reserve-name").val().trim(),
-          phoneNumber: $("#reserve-phone").val().trim(),
-          customerEmail: $("#reserve-email").val().trim(),
-          customerId: $("#reserve-id").val().trim(),
-        };
-        console.log("newRes: ", newRes);
-
-
-        // This line is magic. it's very similar to the standard AJAX function we used.
-        // Essentially we give it a URL, we give it the object we want to send, then we have a "callback"
-        // That callback is the response of our server. In our case, we set up the code in apiRoutes.js that "returns" true if tableData is < 5 to add to tableData arr or false if there is over 5 reservations to add it to the waitListData
-          $.post("/api/tables", newRes, function(data){
-            // If a table is available...tell the user that they have been booked
-          if (data){
-            alert("You have been booked!");
-          } else {
-            // If there is no tables available...tell the user they are on waiting list
-            alert("Sorry, no tables available, you have been placed on the wait list!")
-          }
-
-          // Clear the form after submitting
-          $("#reserve-name").val("");
-          $("#reserve-phone").val("");
-          $("#reserve-email").val("");
-          $("#reserve-id").val("");
-        });
-      });
-
-      
-
-    </script>
   </body>
 </html>
+
+<!-- BELOW CODE IS CRITICAL. IT HANDLES HOW FORM DATA IS SENT TO OUR SERVER -->
+<script type="text/javascript">
+  // In this code below we create the Front-end JavaScript which "POSTS" our form data to our express server.
+  // In essence, when the user hits submit, jQuery grabs all of the fields then sends a post request to our api
+  // Our api recognizes the route (/api/tables)... and then runs the associated code (found in api-routes.js).
+  // In this case the associated code "saves" the data to the table-data.js file or waitinglist-data.js file
+
+  $(".submit").on("click", function (event) {
+    event.preventDefault();
+
+    // Here we grab the form elements
+    var newReservation = {
+      customerName: $("#reserve-name").val().trim(),
+      phoneNumber: $("#reserve-phone").val().trim(),
+      customerEmail: $("#reserve-email").val().trim(),
+      customerID: $("#reserve-unique-id").val().trim(),
+    };
+
+    console.log(newReservation);
+
+    // This line is the magic. It"s very similar to the standard ajax function we used.
+    // Essentially we give it a URL, we give it the object we want to send, then we have a "callback".
+    // The callback is the response of the server. In our case, we set up code in api-routes that "returns" true or false
+    // depending on if a tables is available or not.
+
+    $.post("/api/tables", newReservation, function (data) {
+      // If a table is available... tell user they are booked.
+      if (data) {
+        alert("Yay! You are officially booked!");
+      }
+
+      // If a table is available... tell user they on the waiting list.
+      else {
+        alert("Sorry you are on the wait list");
+      }
+
+      // Clear the form when submitting
+      $("#reserve-name").val("");
+      $("#reserve-phone").val("");
+      $("#reserve-email").val("");
+      $("#reserve-unique-id").val("");
+    });
+  });
+</script>
