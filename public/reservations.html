@@ -72,8 +72,12 @@
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- BELOW CODE IS CRITICAL. IT HANDLES HOW FORM DATA IS SENT TO OUR SERVER -->
     <script type="text/javascript">
-    // get the information put into the form
+    // In this code below we create the Front-end JavaScript which "POSTS" our form data to our express server.
+    // In essence, when the user hits submit, jQuery grabs all of the data from the fields then sends a post request to our API
+    // Our API recognizes the route (/api/tables) and then runs the associated code (found in apiRoutes.js)
+    // In this case the associated code "saves" the data to the tableData.js file or the waitinglistData.js if more than 5 reservations are filled out
       $(".submit").on("click", function (event) {
         event.preventDefault();
         console.log("clicked submit: ", this);
@@ -86,15 +90,24 @@
         };
         console.log("newRes: ", newRes);
 
-        currentReservations.push(newRes);
 
-
+        // This line is magic. it's very similar to the standard AJAX function we used.
+        // Essentially we give it a URL, we give it the object we want to send, then we have a "callback"
+        // That callback is the response of our server. In our case, we set up the code in apiRoutes.js that "returns" true if tableData is < 5 to add to tableData arr or false if there is over 5 reservations to add it to the waitListData
           $.post("/api/tables", newRes, function(data){
+            // If a table is available...tell the user that they have been booked
           if (data){
             alert("You have been booked!");
           } else {
-            alert("Sorry, no tables available - waitlist")
+            // If there is no tables available...tell the user they are on waiting list
+            alert("Sorry, no tables available, you have been placed on the wait list!")
           }
+
+          // Clear the form after submitting
+          $("#reserve-name").val("");
+          $("#reserve-phone").val("");
+          $("#reserve-email").val("");
+          $("#reserve-id").val("");
         });
       });
 
